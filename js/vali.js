@@ -38,5 +38,10 @@ var delComma = function(str) {
     return str.replace(/(^\s*)|(\s*$)/g, '');
 };
 
+// 중간에 공백 제거
+str = str.replace(/ /g, "");
+
+//trim
+$.trim(str);
 
   
