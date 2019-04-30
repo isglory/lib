@@ -18,7 +18,7 @@ MERGE INTO TB_SCORE S
         INSERT (S.COURSE_ID, S.STUDENT_ID, S.SCORE) 
         VALUES (T.COURSE_ID, T.STUDENT_ID, T.SCORE)
 ;
-2.2. 2. 다른 테이블에서 데이터를 비교하여 가져오는 것이 아니라, 직접 값을 넣고자 한다면 DUAL을 사용
+2.2. 다른 테이블에서 데이터를 비교하여 가져오는 것이 아니라, 직접 값을 넣고자 한다면 DUAL을 사용
 MERGE INTO TB_SCORE S
     USING DUAL
        ON (S.COURSE_ID = 'C1' AND S.STUDENT_ID = 'S1')
