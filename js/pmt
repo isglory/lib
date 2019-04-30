@@ -1,0 +1,18 @@
+function eValue(rate, nper, pv, fv, dper, type) { 	// 금리, 대출기간, 대출금, 유예금, 거치기간, 거치2구분
+ 	rate = rate/100/12;								// 연 이율 -> 월 금리로 변환
+ 	nper = nper - dper;								// 대출기간 = 대출기간 - 거치기간
+
+	if (rate == 0){								    	    // 금리가 0인경우
+		if (type == 1) return 0; 					    // type = '1' 이면 거치2로 계산, 거치기간에 이자만 납부 하므로 0원 출력
+		return Number(Math.round(Math.abs (pv - fv) / nper )).toLocaleString();		// 대출금리가 0일때 결과처리
+	}
+
+	var pvif = Math.pow(1 + rate, nper);			        // pmt 분모값 계산
+	var pmt = rate / (pvif - 1) * -(pv * pvif - fv);  // 월 예상 할부금
+
+	if (type == 1) {								// type = '1' 이면 거치2 방식으로 계산
+		pmt = pv * rate;
+	};
+
+	return Number(Math.round(Math.abs(pmt))).toLocaleString();		// 대출금리가 0이 아닐때 결과처리
+}
