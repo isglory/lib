@@ -48,3 +48,13 @@ MERGE INTO TB_SCORE S
 		  )
 </insert>
 
+//삭제
+<delete id="afterBatchDelete">
+	DELETE FROM ${table}	
+</delete>
+	
+//입력
+<insert id="afterBatchInsert">
+	INSERT INTO ${table} SELECT * FROM ${tableBak}
+</insert>
+
