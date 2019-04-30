@@ -19,4 +19,14 @@ function setReimDay(today) {
 	//$('#id').val(setDate);
 }
 
-// location.reload(); 화면 리로딩
+location.reload(); //화면 리로딩
+
+//버튼 여러번 눌러도 한번만 커밋
+$('selector').click(function(event) {
+  if(!event.detail || event.detail == 1){ return true; }
+  else { return false; }
+});
+
+$('selector').click(e => e.detail < 2)
+
+//
