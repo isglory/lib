@@ -1,0 +1,46 @@
+	/** 자바부분
+	 * 레이어 팝업
+	 * @param inMap		데이터
+	 * @param fileName	팝업 파일명
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	@Login
+	@ApiOperation(value="레이어팝업 페이지" , notes="레이어팝업 페이지 입니다.")
+	@RequestMapping(value="/co100001", method= {RequestMethod.POST})
+	public String layerPopup(@RequestBody DataMap inMap, Model model) throws Exception {
+		model.addAllAttributes(inMap);
+		return "/layerPopup/" + inMap.getString("fileName");
+	}
+
+
+/* 자바스크립트 부분 레이어 팝업 열기 */
+function openLayerPop(fileName, inData) {
+	var url = "";	
+
+	if(typeof inData === "undefined") {
+		inData = {fileName : fileName};
+	} else {
+		inData.fileName = fileName;
+	}
+
+	$.kcpAjax({
+		url : url,			        // 요청 url (RestFull)
+		type : "post",
+		data : inData,					// 넘겨주는 데이터 (없어도 무관)
+		dataType : "text",
+		success : function(data) {
+
+			// 중복 생성을 방지하기위해 먼저 지우면서 시작
+			$(".dummyLayerPopDiv").remove();
+			// 레이어 팝업 생성후 body안에 마지막 요소로 추가
+			var layerPop = $("<div class='dummyLayerPopDiv'></div>").html(data);
+			$("body").append(layerPop);
+			// 레이어 팝업이 화면에 보이게 show
+			$(".modal-wrap").show();
+
+		}
+	})
+	return;
+}
