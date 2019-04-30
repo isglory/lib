@@ -1,0 +1,32 @@
+//테이블에 데이터가 이미 존재하면 업데이트 하고, 존재하지 않으면 입력을 해야 하는 경우 MERGE INTO 문 사용
+
+1. 테이블 생성
+CREATE TABLE TB_SCORE (
+    COURSE_ID  VARCHAR2(10) NOT NULL,
+    STUDENT_ID VARCHAR2(10) NOT NULL,
+    SCORE      NUMBER(5, 2) NULL,
+    CONSTRAINT PK_SCORE PRIMARY KEY (COURSE_ID, STUDENT_ID)
+);
+
+2.1. 동일한 테이블 구조를 가지고 있는 TMP_SCORE 테이블로부터 데이터를 옮기는 예
+MERGE INTO TB_SCORE S
+    USING TMP_SCORE T
+       ON (S.COURSE_ID = T.COURSE_ID AND S.STUDENT_ID = T.STUDENT_ID)
+    WHEN MATCHED THEN
+        UPDATE SET S.SCORE = T.SCORE
+    WHEN NOT MATCHED THEN
+        INSERT (S.COURSE_ID, S.STUDENT_ID, S.SCORE) 
+        VALUES (T.COURSE_ID, T.STUDENT_ID, T.SCORE)
+;
+2.2. 2. 다른 테이블에서 데이터를 비교하여 가져오는 것이 아니라, 직접 값을 넣고자 한다면 DUAL을 사용
+MERGE INTO TB_SCORE S
+    USING DUAL
+       ON (S.COURSE_ID = 'C1' AND S.STUDENT_ID = 'S1')
+    WHEN MATCHED THEN
+        UPDATE SET S.SCORE = 20
+    WHEN NOT MATCHED THEN
+        INSERT (S.COURSE_ID, S.STUDENT_ID, S.SCORE)
+        VALUES ('C1', 'S1', 20)
+;
+
+
