@@ -29,4 +29,11 @@ $('selector').click(function(event) {
 
 $('selector').click(e => e.detail < 2)
 
-//
+//모바일인지 확
+function isMobile() {
+	if (navigator.platform) {
+		var filter = "win16|win32|win64|mac|macintel";
+
+		return filter.indexOf(navigator.platform.toLowerCase()) < 0;
+	}
+}
