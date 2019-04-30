@@ -1,3 +1,4 @@
+// 일반 컨트롤러 예시
 @Slf4j
 @RequestMapping(value="/")
 @Controller
@@ -6,14 +7,28 @@ public class 'name' {
 	@Autowired //log
 	ErrorMessageSourceFactory errorMessage;
 	
-	
 	/**
 	 * @param
 	 * @return 
 	 */
 	@ApiOperation(value=" " , notes=" ") // 스웨거 사용시
 	@RequestMapping(value="/", method=RequestMethod.GET)
-	public String 'name'() {
+	public String "name"() {
 		return "tiles.default/ / "; //타일즈 사용시
 	}
+}
+
+
+// AJAX 컨트롤러 예시
+/**
+ * @param inMap {  }
+ * @return
+ * @throws Exception
+ */
+@ApiOperation(value=" ajax" , notes=" ")
+@RequestMapping(value="/uf100001", method=RequestMethod.POST)
+public @ResponseBody DataMap selectCarAjax(@RequestBody DataMap inMap) throws Exception{
+	if (log.isDebugEnabled()) log.debug("ajax 요청 수신 ");
+	DataMap outMap = new DataMap(); //jsp로 보낼 데이터
+	return outMap;
 }
