@@ -1,0 +1,19 @@
+@Slf4j
+@RequestMapping(value="/")
+@Controller
+public class 'name' {
+	
+	@Autowired //log
+	ErrorMessageSourceFactory errorMessage;
+	
+	
+	/**
+	 * @param
+	 * @return 
+	 */
+	@ApiOperation(value=" " , notes=" ") // 스웨거 사용시
+	@RequestMapping(value="/", method=RequestMethod.GET)
+	public String 'name'() {
+		return "tiles.default/ / "; //타일즈 사용시
+	}
+}
