@@ -1,5 +1,21 @@
+//인풋 타입에 사용자 정의 타입만들어 쓰기
 $('#id').click(function(){									
   var obj = Number($(this).attr('data-cash')); //input 안에 data-cash = '' 사용자정의로 만들어서 사용가능
   // .toLocaleString()); // ,스트링 만드는 간단한 방법
 });
+
+//현재날짜로 상환일 예상하기
+function setReimDay(today) {
+	var selDate = ['01','03','05']; //셀렉트박스 날짜
+	var setDate = '01'; //계산후 선택한 날짜
+	if(today <= 25){
+		for(var i=0; i<selDate.length; i++){
+			if(today <= Number(cDt[i])) {
+				setDate = selDate[i];
+				break;
+			} 
+		}
+	}
+	//$('#id').val(setDate);
+}
 
