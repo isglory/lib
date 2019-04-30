@@ -12,4 +12,31 @@ $('#id').on('input', function() {
 		this.value >= 100? $('#inputInterestAPR').val( 100 )  : $('#inputInterestAPR').val( this.value ); // ex) 최대값 100
 });
 
+$('#inputInterestAPR').focusout(function() {
+	if(this.value.substr(this.value.length - 1) == '.') 					//마지막문자 열 확인
+	$('#inputInterestAPR').val( this.value.substring(0, this.value.length-1) );		//마지막문자열 삭제
+	if(this.value == '0.0' || this.value == '0.00' ) $('#inputInterestAPR').val(0);		//마지막에0.0 -> 0	
+});
+
+//금액 콤마 포멧
+var addComma = function(str) {
+	if (str != '') {
+		str = parseInt(String(str));
+		
+		if(str == 0) {
+			return '';
+		}
+	}
+	
+	return String(str).replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+};
+
+// 콤마 제거
+var delComma = function(str) {
+	str = '' + str.replace(/,/gi, '');
+    
+    return str.replace(/(^\s*)|(\s*$)/g, '');
+};
+
+
   
