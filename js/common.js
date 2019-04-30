@@ -19,3 +19,4 @@ function setReimDay(today) {
 	//$('#id').val(setDate);
 }
 
+// location.reload(); 화면 리로딩
