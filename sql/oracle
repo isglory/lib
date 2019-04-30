@@ -30,3 +30,21 @@ MERGE INTO TB_SCORE S
 ;
 
 
+//실무예시
+<insert id="doUpdateAndInsertSubGradeCode" parameterType="datamap">
+		MERGE INTO KC2150 A USING DUAL B
+		ON (A.MNUFTR_CD = #{MNUFTR_CD} AND A.MODEL_CD = #{MODEL_CD} AND A.GRD_LCSF_CD = #{GRD_LCSF_CD} AND A.GRD_SCSF_CD = #{GRD_SCSF_CD})
+		WHEN MATCHED THEN
+			UPDATE SET 
+			A.GRD_SCSF_NM =   	 #{GRD_SCSF_NM},
+			A.GRD_SCSF_ENM =   	 #{GRD_SCSF_ENM},
+		WHEN NOT MATCHED THEN
+			INSERT (
+		  	A.MNUFTR_CD,      
+			A.MODEL_CD,      
+		  ) VALUES (
+		  	#{MNUFTR_CD}
+			,#{MODEL_CD}
+		  )
+</insert>
+
