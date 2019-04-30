@@ -1,0 +1,12 @@
+var arr = [
+    ["name", "Ubuntu"],
+    ["version", 18.04],
+    ["license", "Open Source"]
+]
+
+arr.forEach(et => {
+var key = et[0];
+var val = et[1];
+console.log(`${key}:${val}`);
+})
+
