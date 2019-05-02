@@ -48,5 +48,5 @@ $("#boardDelete").on("click", function() {
 $("#fileSearch").on("click", function() {
   var idx = $("[name='file']").length;
   var file = document.getElementsByName("file")[idx-1].files[0];
-
+}
 
