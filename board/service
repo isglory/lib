@@ -1,0 +1,15 @@
+// list
+public List<DataMap> selectBoard(DataMap inMap) throws Exception {
+	  inMap.put("start", ((inMap.getInt("page")-1) * (inMap.getInt("pageSize")))+1);
+		inMap.put("end", inMap.getInt("page") * inMap.getInt("pageSize"));
+		
+		List<DataMap> outMap = mapper.selectBoard(inMap);
+		return outMap;
+}
+
+// total count 
+public int getTotalCount(DataMap inMap) throws Exception {
+		int totalCount = mapper.selectTotalCount(inMap);
+		
+		return totalCount;
+}
