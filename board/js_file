@@ -1,0 +1,112 @@
+  //파일 갯수 5개 제한
+  if(idx <= 5 && file == null) {
+    $("[name='file']").eq(idx-1).click();
+  } else {
+    alert("업로드 파일 개수는 MAX 5개까지만 업로드 하실 수 있습니다.");
+  }
+  });
+  $("[name=' ']").val(replaceStr($("[name=' ']").val()));
+});
+
+//파일 다운로드
+function downloadFile(fil_seq, fil_ul_nm) {
+  location.href="url?file_seq="+ file_seq +"&fnm="+ encodeURI(fnm);
+}
+
+//파일 업로드 시
+$(document).on('change', '[name="file"]', function() {
+  var idx = $("#td > input").index(this);					  	//file 갯수
+  var fileValue = $(this).val().split("\\");			  	//file 값
+  var fileName = fileValue[fileValue.length-1];			  //file 이름
+  var fileSize = document.getElementsByName("file")[idx].files[0].size;	//file size
+  totalFileSize  = totalFileSize + fileSize;				  //전체 file size
+  var number_fileSize = number_with_delimiter(bytesToSize(fileSize));		//byte 전환 후 , 표시
+  var extension = getExtensionOfFilename(fileName);	  //확장자
+
+  if(fileName.length > 30) {
+    alert("파일명은 30자 이내로 해주세요.");
+    $(this).val("");
+    totalFileSize = totalFileSize - fileSize;
+    return false;
+  }
+
+  if(!checkSpecialStr(fileName)) {
+    alert("파일명에 업로드 할 수 없는 특수문자가 포함되어있습니다.");
+    $(this).val("");
+    totalFileSize = totalFileSize - fileSize;
+    return false;
+  }
+
+  if(!checkExtension(extension)) {
+    alert("해당 확장자는 등록할 수 없습니다.");
+    $(this).val("");
+    totalFileSize = totalFileSize - fileSize;
+    return false;
+  }
+
+  if(totalFileSize > 104857600) {
+    alert("파일 용량은 100M미만만 가능합니다.");
+    $(this).val("");
+    totalFileSize = totalFileSize - fileSize;
+    return false;
+  }
+
+  //file 5개 까지만 생성
+  if(idx <= 3) {
+    $("#td").append("<input type='file' name='file' style='display:none;' />");
+  }
+
+  //업로드 할 file 정보 표시
+  if(idx <= 4) {
+    $("#fileVal").append("<p class='mb-10 blue-005'>"
+        +"<a class='fonwe-b fonsi-14' href='#' id='removeFile'>"
+        +"<img class='va-t dis-inbl' src='/static/admin/images/close.png' alt='' title=''></a>&nbsp;"+ fileName 
+        +"<span class='fonwe-i gray-999'> ("+ number_fileSize +")</span></p>");	
+  }
+
+  $("#filePath").val($(this).val());
+});
+
+//업로드 할 파일 취소 클릭
+$(document).on('click', '#removeFile', function(){
+    const fileIndex = $(this).parent().index();
+    var fileSize = document.getElementsByName("file")[fileIndex].files[0].size;
+    totalFileSize  = totalFileSize - fileSize;
+
+    if($("[name='file']").length > 1 && $("[name='file']").length < 5) {
+      $("[name='file']").eq(fileIndex).remove();
+    } else if($("[name='file']").length == 5) { //5개일때는 삭제하고 하나 생성
+      $("[name='file']").eq(fileIndex).remove();
+      $("#td").append("<input type='file' name='file' style='display:none;' />");
+    } else { //한개일때는 내용만 삭제
+      $("[name='file']").eq(fileIndex).val("");
+    }
+
+    $('#fileVal>p:eq('+fileIndex+')').remove(); //표시한 file 정보 삭제
+    $("#filePath").val("");
+    $("#fileVal").focus();
+});
+	
+//업로드 되어있는 파일 삭제
+function deleteFile(fil_seq, tag) {
+
+  var idx = getChildNumber(tag.parentNode)-1
+
+  if(confirm("첨부파일을 삭제하시겠습니까?")) {
+    $.kcpAjax({
+      url: "/adm/ac/ac100022",
+      data: {"fil_seq": fil_seq},
+      success: function(data) {
+         var fileSize = data.FIL_SIZE;
+         totalFileSize  = totalFileSize - fileSize; //전체 file size 계산
+
+         if($("[name='file']").length > 1) {
+            $("[name='file']").eq(idx).remove();
+           } else {
+            $("[name='file']").eq(idx).val("");
+           }
+
+         $('#fileVal>p:eq('+idx+')').remove();
+      }
+    });
+  }
