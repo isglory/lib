@@ -1,0 +1,17 @@
+// list
+@ApiOperation(value="" , notes="")
+@RequestMapping(value="/ac100000", method=RequestMethod.GET)
+public String 'method name'(@RequestParam Map<String, Object> inMap, Model model) throws Exception {		
+		DataMap outMap = new DataMap(inMap);
+		outMap.put("pageSize", 10);
+		outMap.put("totalCount", service.getTotalCount(inMap));
+		if(inData.get("page") == null || inData.get("page").equals("")) inData.put("page", 1);
+		List<DataMap> outMapList = service.selectBoard(inData);
+		
+		model.addAttribute("outMapList", outMapList);
+		model.addAttribute("outMap", outMap);
+		
+		return "tiles.default 'url' ";
+	}
+
+
