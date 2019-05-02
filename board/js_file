@@ -88,17 +88,15 @@ $(document).on('click', '#removeFile', function(){
 });
 	
 //업로드 되어있는 파일 삭제
-function deleteFile(fil_seq, tag) {
-
+function delFiles(seq, tag) {
   var idx = getChildNumber(tag.parentNode)-1
-
   if(confirm("첨부파일을 삭제하시겠습니까?")) {
-    $.kcpAjax({
-      url: "/adm/ac/ac100022",
-      data: {"fil_seq": fil_seq},
+    $.ajax({
+      url: "url",
+      data: {"seq": seq},
       success: function(data) {
-         var fileSize = data.FIL_SIZE;
-         totalFileSize  = totalFileSize - fileSize; //전체 file size 계산
+         var size = data.size;
+         totalSize  = totalSize - size; //전체 file size 계산
 
          if($("[name='file']").length > 1) {
             $("[name='file']").eq(idx).remove();
