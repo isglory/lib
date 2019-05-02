@@ -108,3 +108,4 @@ function delFiles(seq, tag) {
       }
     });
   }
+}
