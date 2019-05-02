@@ -1,0 +1,52 @@
+//리스트로 이동
+$("#boardList").on("click", function() {
+  var page = "${inMap.page}";
+  var gubun = "${inMap.gubun}";
+  var category = "${inMap.category}";
+  var word = "${fn:replace(inMap.word, '\\', '\\\\')}";
+  word = replaceStr(word);
+
+  location.href="/url?page="+page+"&gubun="gubun"+"&category="+category+"&word="+ encodeURI(word);
+});
+    
+//수정 버튼
+$("#boardUpdate").on("click", function() {
+  if($("[name=' ']").val().trim() == "") {
+    $("[name=' ']").focus();
+    return false;
+  }
+
+  if($("#summernote").summernote('isEmpty')) {
+    alert("is empty");
+    return false;
+  }
+
+  for(var i=$("[name='file']").length-1; i>=0; i--) {
+    if($("[name='file']").eq(i).val() == "") {
+      $("[name='file']").eq(i).remove();
+    }
+  }
+
+  if($("[name='file']").eq(0).val() == "") {
+    $("[name='file']").eq(0).remove();
+  }
+
+  var root = window.location.href.split("/")[4];
+  $("[name='root']").val(root);
+  $("#formID").submit();
+}
+
+//삭제 버튼 클릭
+$("#boardDelete").on("click", function() {
+  if(confirm("삭제하시겠습니까?")) {
+    $("#frm").attr("action", "url");
+    $("#frm").submit();
+  }
+});
+
+//찾아보기 클릭
+$("#fileSearch").on("click", function() {
+  var idx = $("[name='file']").length;
+  var file = document.getElementsByName("file")[idx-1].files[0];
+
+
