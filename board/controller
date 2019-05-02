@@ -1,17 +1,41 @@
 // list
-@ApiOperation(value="" , notes="")
-@RequestMapping(value="/ac100000", method=RequestMethod.GET)
+@RequestMapping(value="/ ", method=RequestMethod.GET)
 public String 'method name'(@RequestParam Map<String, Object> inMap, Model model) throws Exception {		
-		DataMap outMap = new DataMap(inMap);
-		outMap.put("pageSize", 10);
-		outMap.put("totalCount", service.getTotalCount(inMap));
-		if(inData.get("page") == null || inData.get("page").equals("")) inData.put("page", 1);
-		List<DataMap> outMapList = service.selectBoard(inData);
-		
-		model.addAttribute("outMapList", outMapList);
-		model.addAttribute("outMap", outMap);
-		
-		return "tiles.default 'url' ";
+	DataMap outMap = new DataMap(inMap);
+	outMap.put("pageSize", 10);
+	outMap.put("totalCount", service.getTotalCount(inMap));
+	if(inData.get("page") == null || inData.get("page").equals("")) inData.put("page", 1);
+	List<DataMap> outMapList = service.selectBoard(inData);
+
+	model.addAttribute("outMapList", outMapList);
+	model.addAttribute("outMap", outMap);
+
+	return "tiles.default 'url' ";
 	}
 
+// register article
+@RequestMapping(value="/ ", method=RequestMethod.POST)
+public String 'method name'(@RequestParam Map<String, Object> inMap, @RequestParam("file") List<MultipartFile> file) throws Exception {
+	DataMap outMap = new DataMap();
+	outMap.putAll(inMap);
+	outMap.put("file_path", configMessage.getMessage("file.upload.path") +File.separator+ inData.getString("root") +File.separator);
+	if(log.isDebugEnabled()) log.debug("outMap {}",outMap);
+	service.insertBoard(outMap, file);
+
+	return "redirect: 'url' ";
+}
+
+// update article
+@RequestMapping(value="/", method=RequestMethod.GET)
+public String 'method name'(@RequestParam Map<String, Object> inMap, Model model) throws Exception {
+	DataMap outMap = new DataMap();
+	outMap = service.selectBoardView(inMap);
+
+	if(log.isDebugEnabled()) log.debug("outMap {}",outMap);
+	
+	model.addAttribute("inMap", inMap);
+	model.addAttribute("outMap", outMap);
+	
+	return "tiles.default/'url' ";
+}
 
