@@ -18,8 +18,9 @@ function setReimDay(today) {
 	}
 	//$('#id').val(setDate);
 }
-
-location.reload(); //화면 리로딩
+//화면관련
+location.reload(); 
+location.href="/ /?page="+ page +"&v1="+v1+"&v2="+v2+"&word="+encodeURI(word);
 
 //버튼 여러번 눌러도 한번만 커밋
 $('selector').click(function(event) {
